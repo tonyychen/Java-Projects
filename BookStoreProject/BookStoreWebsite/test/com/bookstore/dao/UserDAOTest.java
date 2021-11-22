@@ -2,8 +2,11 @@ package com.bookstore.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
@@ -29,9 +32,9 @@ public class UserDAOTest {
 	@Test
 	public void testCreateUsers() {
 		Users user1 = new Users();
-		user1.setEmail("tommy@gmail.com");
-		user1.setFullName("Tommy Timothy");
-		user1.setPassword("abcdefghij");
+		user1.setEmail("john@gmail.com");
+		user1.setFullName("John Smith");
+		user1.setPassword("jonny");
 
 		user1 = userDAO.create(user1);
 
@@ -45,7 +48,7 @@ public class UserDAOTest {
 
 		assertTrue(user1.getUserId() > 0); // UserId will have value if persistence is successful
 	}
-	
+
 	@Test
 	public void testUpdateUsers() {
 		Users user = new Users();
@@ -53,16 +56,67 @@ public class UserDAOTest {
 		user.setEmail("nam@codejava.net");
 		user.setFullName("Nam Ha Minh");
 		user.setPassword("mysecret");
-		
+
 		user = userDAO.update(user);
-		
-		//This is incorrect, just a temporary solution!
+
+		// This is incorrect, just a temporary solution!
 		String expected = "mysecret";
 		String actual = user.getPassword();
-		
+
 		assertEquals(expected, actual);
 	}
+
+	@Test
+	public void testGetUsersFound() {
+		Integer userId = 1;
+		Users user = userDAO.get(userId);
+		if (user != null)
+			System.out.println(user.getEmail());
+
+		assertNotNull(user);
+	}
 	
+	@Test
+	public void testGetUsersNotFound() {
+		Integer userId = 99;
+		Users user = userDAO.get(userId);
+		
+		assertNull(user);
+	}
+	
+	@Test
+	public void testDeleteUsers() {
+		Integer userId = 5;
+		userDAO.delete(userId);
+		
+		Users user = userDAO.get(userId);
+		
+		assertNull(user);
+	}
+	
+	@Test(expected = EntityNotFoundException.class)
+	public void testDeleteNonExistUsers() {
+		Integer userId = 55;
+		userDAO.delete(userId);
+	}
+	
+	@Test
+	public void testListAll() {
+		List<Users> listUsers = userDAO.listAll();
+		
+		for (Users user : listUsers) {
+			System.out.println(user.getEmail());
+		}
+		
+		assertTrue(listUsers.size() > 0);
+	}
+	
+	@Test
+	public void testCount() {
+		long totalUsers = userDAO.count();
+		assertEquals(4, totalUsers);
+	}
+
 	@AfterClass
 	public static void tearDownClass() {
 		entityManager.close();
