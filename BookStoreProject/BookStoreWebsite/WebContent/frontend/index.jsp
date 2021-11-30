@@ -12,7 +12,7 @@
 	<div align="center">
 		<br />
 		<br />
-		<h3>This is main content: New books, Best-selling Books</h3>
+		<h3>This is main content:</h3>
 		<h2>New Books:</h2>
 		<h2>Best-Selling Books:</h2>
 		<h2>Most-Favored Books:</h2>
