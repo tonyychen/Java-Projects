@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bookstore.controller.BaseServlet;
 import com.bookstore.service.UserServices;
+import com.bookstore.utility.HashGenerationException;
 
 @WebServlet("/admin/create_user")
 public class CreateUserServlet extends BaseServlet {
@@ -17,7 +18,11 @@ public class CreateUserServlet extends BaseServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UserServices userServices = new UserServices(entityManager, request, response);
-		userServices.createUser();
+		try {
+			userServices.createUser();
+		} catch (HashGenerationException e) {
+			throw new ServletException("issue with password hash generation", e);
+		}
 	}
 
 }

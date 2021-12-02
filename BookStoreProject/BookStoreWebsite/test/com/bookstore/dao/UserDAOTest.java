@@ -15,6 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bookstore.entity.Users;
+import com.bookstore.utility.HashGenerationException;
 
 public class UserDAOTest extends BaseDAOTest{
 	private static UserDAO userDAO;
@@ -111,6 +112,24 @@ public class UserDAOTest extends BaseDAOTest{
 	public void testCount() {
 		long totalUsers = userDAO.count();
 		assertEquals(4, totalUsers);
+	}
+	
+	@Test
+	public void testCheckLoginSuccess() throws HashGenerationException {
+		String email = "nam@codejava.net";
+		String password = "mysecret";
+		boolean loginResult = userDAO.checkLogin(email, password);
+		
+		assertTrue(loginResult);
+	}
+	
+	@Test
+	public void testCheckLoginFail() throws HashGenerationException {
+		String email = "nam123";
+		String password = "mysecret1";
+		boolean loginResult = userDAO.checkLogin(email, password);
+		
+		assertFalse(loginResult);
 	}
 	
 	@Test

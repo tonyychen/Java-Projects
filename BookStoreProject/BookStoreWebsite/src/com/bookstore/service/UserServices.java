@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bookstore.dao.UserDAO;
 import com.bookstore.entity.Users;
+import com.bookstore.utility.HashGenerationException;
+import com.bookstore.utility.HashGenerator;
 
 public class UserServices {
 	private EntityManager entityManager;
@@ -55,10 +57,10 @@ public class UserServices {
 	// userDAO.create(newUser);
 	// }
 
-	public void createUser() throws ServletException, IOException {
+	public void createUser() throws ServletException, IOException, HashGenerationException {
 		String email = request.getParameter("email");
 		String fullName = request.getParameter("fullname");
-		String password = request.getParameter("password");
+		String password = HashGenerator.generateMD5(request.getParameter("password"));
 
 		Users existUser = userDAO.findByEmail(email);
 		if (existUser != null) {
@@ -92,11 +94,11 @@ public class UserServices {
 
 	}
 
-	public void updateUser() throws ServletException, IOException {
+	public void updateUser() throws ServletException, IOException, HashGenerationException {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
 		String email = request.getParameter("email");
 		String fullName = request.getParameter("fullname");
-		String password = request.getParameter("password");
+		String password = HashGenerator.generateMD5(request.getParameter("password"));
 
 		Users userById = userDAO.get(userId);
 		Users userByEmail = userDAO.findByEmail(email);
@@ -146,6 +148,26 @@ public class UserServices {
 
 			String message = "User has been deleted successfully";
 			listUser(message);
+		}
+	}
+	
+	public void login() throws ServletException, IOException, HashGenerationException {
+		String email = request.getParameter("email");
+		String password = HashGenerator.generateMD5(request.getParameter("password"));
+		
+		boolean loginResult = userDAO.checkLogin(email, password);
+		
+		if (loginResult) {
+			request.getSession().setAttribute("useremail", email);;
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/");
+			dispatcher.forward(request, response);
+			
+		} else {
+			String message = "Login failed!";
+			request.setAttribute("message", message);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 }
