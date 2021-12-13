@@ -135,6 +135,26 @@ public class BookDAOTest extends BaseDAOTest {
 		assertEquals(2, totalBooks);
 	}
 	
+	@Test
+	public void testListByCategory() {
+		int categoryId = 4;
+		
+		List<Book> listBooks = bookDao.listByCategory(categoryId);
+		
+		assertTrue(listBooks.size() > 0);
+	}
+	
+	@Test
+	public void testListNewBooks() {
+		List<Book> listNewBooks = bookDao.listNewBooks();
+		
+		for (Book aBook : listNewBooks) {
+			System.out.println(aBook.getTitle() + " - " + aBook.getPublishDate());
+		}
+		
+		assertEquals(4, listNewBooks.size());
+	}
+	
 	public Book generateTestBook() throws ParseException, IOException {
 		Book newBook = new Book();
 
