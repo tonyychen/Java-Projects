@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -49,10 +50,10 @@
 					<td>${book.title}</td>
 					<td>${book.author}</td>
 					<td>${book.category.name}</td>
-					<td>${book.price}</td>
-					<td>${book.lastUpdateTime}</td>
-					<td><a href="edit_book?id=${book.bookId}">Edit</a> &nbsp; <a
-						href="javascirpt:void(0);" class="deleteLink" id="${book.bookId}">Delete</a>
+					<td>$${book.price}</td>
+					<td><fmt:formatDate pattern='MM/dd/yyyy' value='${book.lastUpdateTime}'/></td>
+					<td><a href="edit_book?id=${book.bookId}">Edit</a> &nbsp; 
+					<a href="javascript:void(0);" class="deleteLink" id="${book.bookId}">Delete</a>
 					</td>
 				</tr>
 			</c:forEach>

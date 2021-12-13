@@ -43,7 +43,7 @@
 					<td>${user.fullName}</td>
 					<td>
 						<a href="edit_user?id=${user.userId}">Edit</a> &nbsp; 
-						<a href="javascirpt:void(0);" class="deleteLink" id="${user.userId}">Delete</a>
+						<a href="javascript:void(0);" class="deleteLink" id="${user.userId}">Delete</a>
 					</td>
 				</tr>
 			</c:forEach>
