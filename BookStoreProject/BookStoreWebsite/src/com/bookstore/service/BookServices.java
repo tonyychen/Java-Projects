@@ -201,8 +201,16 @@ public class BookServices {
 
 	public void listBooksByCategory() throws ServletException, IOException {
 		int categoryId = Integer.parseInt(request.getParameter("id"));
-		List<Book> listBooks = bookDAO.listByCategory(categoryId);
 		Category category = categoryDAO.get(categoryId);
+		
+		if (category == null) {
+			String message = "Sorry, the category ID " + categoryId + " is not available.";
+			request.setAttribute("message", message);
+			request.getRequestDispatcher("frontend/message.jsp").forward(request, response);
+			return;
+		}
+		
+		List<Book> listBooks = bookDAO.listByCategory(categoryId);
 		List<Category> listCategory = categoryDAO.listAll();
 		
 		request.setAttribute("listBooks", listBooks);
