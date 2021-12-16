@@ -14,12 +14,13 @@
 		<table width="80%" style="border:0">
 			<tr>
 				<td colspan="3" align="left">
-					<h2>${book.title}</h2> by ${book.author}
+					<p id="book-title">${book.title}</p>
+					by <span id="book-author">${book.author}</span> 
 				</td>
 			</tr>
 			<tr height="50px">
-				<td rowspan="2">
-					<img src="data:image/jpg;base64,${book.base64Image}" width="240" height="300" />
+				<td rowspan="2" width="20%">
+					<img class="book-large" src="data:image/jpg;base64,${book.base64Image}" />
 				</td>
 				<td valign="top" align="left">Rating *****</td>
 				<td valign="top" rowspan="2" width="20%">
@@ -29,7 +30,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="text-align:justify">${book.description}</td>
+				<td id="description">${book.description}</td>
 			</tr>
 			<tr><td>&nbsp;</td></tr>
 			<tr>

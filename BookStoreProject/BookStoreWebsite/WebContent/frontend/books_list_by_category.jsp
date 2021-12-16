@@ -15,12 +15,12 @@
 		<h2>${category.name}</h2>
 	</div>
 	
-	<div align="center" style="width: 80%; margin: 0 auto;">
+	<div class="book-group">
 		<c:forEach items="${listBooks}" var="book">
-			<div style="display:inline-block; margin: 20px;" >
+			<div class="book">
 				<div>
 					<a href="view_book?id=${book.bookId}">
-						<img src="data:image/jpg;base64,${book.base64Image}" width="128" height="164"/>
+						<img class="book-small" src="data:image/jpg;base64,${book.base64Image}"/>
 					</a>
 				</div>
 				<div>

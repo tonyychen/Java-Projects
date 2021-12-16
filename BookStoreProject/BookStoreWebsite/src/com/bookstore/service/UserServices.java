@@ -3,10 +3,6 @@ package com.bookstore.service;
 import java.io.IOException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,17 +13,15 @@ import com.bookstore.utility.HashGenerationException;
 import com.bookstore.utility.HashGenerator;
 
 public class UserServices {
-	private EntityManager entityManager;
 	private UserDAO userDAO;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
-	public UserServices(EntityManager entityManager, HttpServletRequest request, HttpServletResponse response) {
+	public UserServices(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
 
-		this.entityManager = entityManager;
-		userDAO = new UserDAO(entityManager);
+		userDAO = new UserDAO();
 	}
 
 	// public List<Users> listUser() {
@@ -42,20 +36,9 @@ public class UserServices {
 		List<Users> listUsers = userDAO.listAll();
 
 		request.setAttribute("listUsers", listUsers);
-		if (message != null) {
-			request.setAttribute("message", message);
-		}
 
-		String listPage = "user_list.jsp";
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
-
-		requestDispatcher.forward(request, response);
+		CommonUtility.forwardToPage(request, response, "user_list.jsp", message);
 	}
-
-	// public void createUser(String email, String fullName, String password) {
-	// Users newUser = new Users(email, fullName, password);
-	// userDAO.create(newUser);
-	// }
 
 	public void createUser() throws ServletException, IOException, HashGenerationException {
 		String email = request.getParameter("email");
@@ -65,9 +48,7 @@ public class UserServices {
 		Users existUser = userDAO.findByEmail(email);
 		if (existUser != null) {
 			String message = "Could not create user. A user with email " + email + " already exists";
-			request.setAttribute("message", message);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("message.jsp");
-			dispatcher.forward(request, response);
+			CommonUtility.showMessageBackend(request, response, message);
 		} else {
 			Users newUser = new Users(email, fullName, password);
 			userDAO.create(newUser);
@@ -81,15 +62,10 @@ public class UserServices {
 
 		if (user == null) {
 			String message = "Could not find user with ID " + userId;
-			request.setAttribute("message", message);
-
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("message.jsp");
-			requestDispatcher.forward(request, response);
+			CommonUtility.showMessageBackend(request, response, message);
 		} else {
-			String editPage = "user_form.jsp";
 			request.setAttribute("user", user);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(editPage);
-			requestDispatcher.forward(request, response);
+			CommonUtility.forwardToPage(request, response, "user_form.jsp");
 		}
 
 	}
@@ -105,16 +81,10 @@ public class UserServices {
 
 		if (userById == null) {
 			String message = "Could not find user with ID " + userId;
-			request.setAttribute("message", message);
-
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("message.jsp");
-			requestDispatcher.forward(request, response);
+			CommonUtility.showMessageBackend(request, response, message);
 		} else if (userByEmail != null && userByEmail.getUserId() != userById.getUserId()) {
 			String message = "Could not update user. User with email " + email + " already exists.";
-			request.setAttribute("message", message);
-
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("message.jsp");
-			requestDispatcher.forward(request, response);
+			CommonUtility.showMessageBackend(request, response, message);
 		} else {
 			Users user = new Users(userId, email, fullName, password);
 			userDAO.update(user);
@@ -128,10 +98,7 @@ public class UserServices {
 		int userId = Integer.parseInt(request.getParameter("id"));
 		if (userId == 1) {
 			String message = "The default admin user account cannot be deleted";
-			request.setAttribute("message", message);
-
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("message.jsp");
-			requestDispatcher.forward(request, response);
+			CommonUtility.showMessageBackend(request, response, message);
 			return;
 		}
 
@@ -139,10 +106,7 @@ public class UserServices {
 
 		if (user == null) {
 			String message = "Could not find user with ID " + userId;
-			request.setAttribute("message", message);
-
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("message.jsp");
-			requestDispatcher.forward(request, response);
+			CommonUtility.showMessageBackend(request, response, message);
 		} else {
 			userDAO.delete(userId);
 
@@ -160,14 +124,10 @@ public class UserServices {
 		if (loginResult) {
 			request.getSession().setAttribute("useremail", email);;
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/");
-			dispatcher.forward(request, response);
-			
+			CommonUtility.forwardToPage(request, response, "/admin/");
 		} else {
 			String message = "Login failed!";
-			request.setAttribute("message", message);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-			dispatcher.forward(request, response);
+			CommonUtility.forwardToPage(request, response, "login.jsp", message);
 		}
 	}
 }

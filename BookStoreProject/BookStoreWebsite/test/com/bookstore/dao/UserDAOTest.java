@@ -1,13 +1,14 @@
 package com.bookstore.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 
 import org.junit.AfterClass;
@@ -17,13 +18,12 @@ import org.junit.Test;
 import com.bookstore.entity.Users;
 import com.bookstore.utility.HashGenerationException;
 
-public class UserDAOTest extends BaseDAOTest{
+public class UserDAOTest {
 	private static UserDAO userDAO;
 
 	@BeforeClass
 	public static void setupClass() throws Exception {
-		BaseDAOTest.setUpBeforeClass();
-		userDAO = new UserDAO(entityManager);
+		userDAO = new UserDAO();
 	}
 
 	@Test
@@ -111,7 +111,7 @@ public class UserDAOTest extends BaseDAOTest{
 	@Test
 	public void testCount() {
 		long totalUsers = userDAO.count();
-		assertEquals(4, totalUsers);
+		assertTrue(totalUsers > 0);
 	}
 	
 	@Test
@@ -142,7 +142,7 @@ public class UserDAOTest extends BaseDAOTest{
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		BaseDAOTest.tearDownAfterClass();
+		userDAO.close();
 	}
 
 }
