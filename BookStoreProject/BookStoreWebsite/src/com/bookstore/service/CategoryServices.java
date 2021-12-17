@@ -7,11 +7,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bookstore.dao.BookDAO;
 import com.bookstore.dao.CategoryDAO;
+import com.bookstore.entity.Book;
 import com.bookstore.entity.Category;
 
 public class CategoryServices {
 	private CategoryDAO categoryDAO;
+	private BookDAO bookDAO;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
@@ -20,6 +23,7 @@ public class CategoryServices {
 		this.response = response;
 
 		categoryDAO = new CategoryDAO();
+		bookDAO = new BookDAO();
 	}
 
 	public void listCategory(String message) throws ServletException, IOException {
@@ -91,6 +95,14 @@ public class CategoryServices {
 
 		if (category == null) {
 			String message = "Could not find category with ID " + categoryId;
+			CommonUtility.showMessageBackend(request, response, message);
+			return;
+		}
+		
+		List<Book> booksInCategory = bookDAO.listByCategory(categoryId);
+		if (booksInCategory != null && booksInCategory.size() > 0) {
+			String message = "Could not delete category with ID " + categoryId 
+					+ " because there are books in the category";
 			CommonUtility.showMessageBackend(request, response, message);
 			return;
 		}

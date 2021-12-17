@@ -14,9 +14,12 @@
 </c:if>
 <link rel="stylesheet" href="../css/style.css" />
 <link rel="stylesheet" href="../css/jquery-ui.min.css" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/richtext.min.css">
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="../js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/jquery.richtext.min.js"></script>
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
@@ -92,12 +95,12 @@
 			</tr>
 			<tr>
 				<td align="right">Description:</td>
-				<td align="left"><textarea rows="5" cols="50"
-						name="description" id="description">${book.description}</textarea></td>
+				<td align="left">
+					<div style="height: 100px; width: 700px;">
+						<textarea name="description" id="description">${book.description}</textarea>
+					</div>
+				</td>
 			</tr>
-
-
-
 			<tr>
 				<td>&nbsp;</td>
 			</tr>
@@ -116,6 +119,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#publishDate").datepicker();
+		$('#description').richText();
 		$("#bookImage").change(function() {
 			showImageThumbnail(this);
 		});
