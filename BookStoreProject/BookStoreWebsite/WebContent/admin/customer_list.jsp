@@ -8,8 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Manage Customers - Evergreen Bookstore Administration</title>
 <link rel="stylesheet" href="../css/style.css" />
-<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
@@ -17,7 +15,7 @@
 	<div align="center">
 		<h2 class="pageheading">Customer Management</h2>
 		<h3>
-			<a href="new_customer">Create new Customer</a>
+			<a href="customer_form.jsp">Create new Customer</a>
 		</h3>
 	</div>
 
