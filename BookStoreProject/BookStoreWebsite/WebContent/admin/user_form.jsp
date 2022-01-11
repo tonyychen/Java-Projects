@@ -59,7 +59,7 @@
 			<tr>
 				<td colspan="2" align="center">
 					<button type="submit">Save</button>&nbsp;&nbsp;&nbsp;
-					<button id="buttonCancel">Cancel</button>
+					<button onclick="window.history.go(-1); return false;">Cancel</button>
 				</td>
 			</tr>
 		</table>
@@ -90,9 +90,11 @@
 			}
 		});
 		
+		/*
 		$("#buttonCancel").click(function() {
 			history.go(-1);
 		})
+		*/
 	});
 </script>
 

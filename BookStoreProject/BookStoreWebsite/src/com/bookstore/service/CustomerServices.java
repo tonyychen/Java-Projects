@@ -3,7 +3,6 @@ package com.bookstore.service;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,14 +24,9 @@ public class CustomerServices {
 	public void listCustomers(String message) throws ServletException, IOException {
 		List<Customer> listCustomer = customerDAO.listAll();
 
-		if (message != null) {
-			request.setAttribute("message", message);
-		}
 		request.setAttribute("listCustomer", listCustomer);
-
-		String listPage = "customer_list.jsp";
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
-		requestDispatcher.forward(request, response);
+		
+		CommonUtility.forwardToPage(request, response, "customer_list.jsp", message);
 	}
 	
 	public void listCustomers() throws ServletException, IOException {
@@ -71,5 +65,76 @@ public class CustomerServices {
 			String message = "New customer has been created successfully.";
 			listCustomers(message);
 		}
+	}
+
+	public void editCustomer() throws ServletException, IOException {
+		Integer customerId = Integer.parseInt(request.getParameter("id"));
+		Customer customer = customerDAO.get(customerId);
+		
+		if (customer == null) {
+			String message = "Could not find customer with ID " + customerId + ".";
+			CommonUtility.showMessageBackend(request, response, message);
+			return;
+		}
+		
+		request.setAttribute("customer", customer);
+		
+		CommonUtility.forwardToPage(request, response, "customer_form.jsp");
+	}
+
+	public void updateCustomer() throws ServletException, IOException {
+		Integer customerId = Integer.parseInt(request.getParameter("customerId"));
+		String email = request.getParameter("email");
+
+		Customer customerByEmail = customerDAO.findByEmail(email);
+		Customer customerById = customerDAO.get(customerId);
+		if (customerById == null) {
+			String message = "Could not find customer with ID " + customerId + ".";
+			CommonUtility.showMessageBackend(request, response, message);
+			return;
+		}
+		
+		String message = null;
+		if (customerByEmail != null && customerByEmail.getCustomerId() != customerId) {
+			message = "Could not update the customer ID " + customerId 
+					+ " because there is an existing customer customer having the same email.";
+		} else {
+			String fullName = request.getParameter("fullName");
+			String password = request.getParameter("password");
+			String phone = request.getParameter("phone");
+			String address = request.getParameter("address");
+			String city = request.getParameter("city");
+			String zipCode = request.getParameter("zipCode");
+			String country = request.getParameter("country");
+						
+			customerById.setEmail(email);
+			customerById.setFullname(fullName);
+			customerById.setPassword(password);
+			customerById.setPhone(phone);
+			customerById.setAddress(address);
+			customerById.setCity(city);
+			customerById.setZipcode(zipCode);
+			customerById.setCountry(country);
+			
+			customerDAO.update(customerById);
+			
+			message = "The customer has been updated successfully.";
+		}
+		
+		listCustomers(message);
+	}
+
+	public void deleteCustomer() throws ServletException, IOException {
+		Integer customerId = Integer.parseInt(request.getParameter("id"));
+		if (customerDAO.get(customerId) == null) {
+			String message = "Could not find customer with ID " + customerId + ", or it has been deleted by another admin";
+			CommonUtility.showMessageBackend(request, response, message);
+			return;
+		}
+			
+		customerDAO.delete(customerId);
+		
+		String message = "The customer has been deleted successfully.";
+		listCustomers(message);
 	}
 }
