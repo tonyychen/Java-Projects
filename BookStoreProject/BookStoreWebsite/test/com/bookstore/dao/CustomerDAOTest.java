@@ -89,5 +89,25 @@ public class CustomerDAOTest {
 		
 		assertNotNull(customer);
 	}
+	
+	@Test
+	public void testCheckLoginSuccess() {
+		String email = "billy.jane@gmail.com";
+		String password = "secret";
+		
+		Customer customer = customerDao.checkLogin(email, password);
+		
+		assertNotNull(customer);
+	}
+	
+	@Test
+	public void testCheckLoginFail() {
+		String email = "abc@gmail.com";
+		String password = "secret";
+		
+		Customer customer = customerDao.checkLogin(email, password);
+		
+		assertNull(customer);
+	}
 
 }

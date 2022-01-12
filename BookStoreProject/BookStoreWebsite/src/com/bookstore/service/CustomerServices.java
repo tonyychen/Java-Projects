@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bookstore.dao.CustomerDAO;
 import com.bookstore.entity.Customer;
+import com.bookstore.utility.HashGenerationException;
+import com.bookstore.utility.HashGenerator;
 
 public class CustomerServices {
 	private CustomerDAO customerDAO;
@@ -33,7 +35,7 @@ public class CustomerServices {
 		listCustomers(null);
 	}
 
-	public void createCustomer() throws ServletException, IOException {
+	public void createCustomer() throws ServletException, IOException, HashGenerationException {
 		String email = request.getParameter("email");
 		Customer existCustomer = customerDAO.findByEmail(email);
 
@@ -43,7 +45,7 @@ public class CustomerServices {
 			listCustomers(message);
 		} else {
 			Customer newCustomer = new Customer();
-			
+
 			updateCustomerFieldsFromForm(newCustomer);
 
 			customerDAO.create(newCustomer);
@@ -68,7 +70,7 @@ public class CustomerServices {
 		CommonUtility.forwardToPage(request, response, "customer_form.jsp");
 	}
 
-	public void updateCustomer() throws ServletException, IOException {
+	public void updateCustomer() throws ServletException, IOException, HashGenerationException {
 		Integer customerId = Integer.parseInt(request.getParameter("customerId"));
 		String email = request.getParameter("email");
 
@@ -110,7 +112,7 @@ public class CustomerServices {
 		listCustomers(message);
 	}
 
-	public void registerCustomer() throws ServletException, IOException {
+	public void registerCustomer() throws ServletException, IOException, HashGenerationException {
 		String email = request.getParameter("email");
 		Customer existCustomer = customerDAO.findByEmail(email);
 
@@ -120,18 +122,18 @@ public class CustomerServices {
 			message = "Could not register: the email " + email + " is already registered by another customer.";
 		} else {
 			Customer newCustomer = new Customer();
-			
+
 			updateCustomerFieldsFromForm(newCustomer);
 
 			customerDAO.create(newCustomer);
 
-			message = "You have registered successfully! Thank you.<br/>"+"<a href='login'>Click Here</a> to login";
+			message = "You have registered successfully! Thank you.<br/>" + "<a href='login'>Click Here</a> to login";
 		}
 
 		CommonUtility.showMessageFrontend(request, response, message);
 	}
-	
-	private void updateCustomerFieldsFromForm(Customer customer) {
+
+	private void updateCustomerFieldsFromForm(Customer customer) throws HashGenerationException {
 		String email = request.getParameter("email");
 		String fullName = request.getParameter("fullName");
 		String password = request.getParameter("password");
@@ -143,11 +145,34 @@ public class CustomerServices {
 
 		customer.setEmail(email);
 		customer.setFullname(fullName);
-		customer.setPassword(password);
+		customer.setPassword(HashGenerator.generateMD5(password));
 		customer.setPhone(phone);
 		customer.setAddress(address);
 		customer.setCity(city);
 		customer.setZipcode(zipCode);
 		customer.setCountry(country);
+	}
+
+	public void showLogin() throws ServletException, IOException {
+		CommonUtility.forwardToPage(request, response, "frontend/login.jsp");
+	}
+
+	public void doLogin() throws ServletException, IOException, HashGenerationException {
+		String email = request.getParameter("email");
+		String password = HashGenerator.generateMD5(request.getParameter("password"));
+		
+		Customer customer = customerDAO.checkLogin(email, password);
+		
+		if (customer == null) {
+			String message = "Login failed. Please check your email and password";
+			CommonUtility.forwardToPage(request, response, "frontend/login.jsp", message);
+		} else {
+			request.getSession().setAttribute("loggedCustomer", customer);
+			showCustomerProfile();
+		}
+	}
+	
+	public void showCustomerProfile() throws ServletException, IOException {
+		CommonUtility.forwardToPage(request, response, "frontend/customer_profile.jsp");
 	}
 }

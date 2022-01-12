@@ -1,4 +1,4 @@
-package com.bookstore.controller.admin.customer;
+package com.bookstore.controller.frontend.customer;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -10,15 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 import com.bookstore.service.CustomerServices;
 import com.bookstore.utility.HashGenerationException;
 
-@WebServlet("/admin/update_customer")
-public class UpdateCustomerServlet extends HttpServlet {
+@WebServlet("/login")
+public class CustomerLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		CustomerServices customerServices = new CustomerServices(request, response);
+		customerServices.showLogin();
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		CustomerServices customerServices = new CustomerServices(request, response);
 		try {
-			customerServices.updateCustomer();
+			customerServices.doLogin();
 		} catch (HashGenerationException e) {
 			throw new ServletException("issue with password hash generation", e);
 		}

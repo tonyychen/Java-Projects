@@ -53,12 +53,12 @@
 			<tr>
 				<td align="right">Password:</td>
 				<td align="left"><input type="password" id="password" name="password"
-					size="45" value="${customer.password}" /></td>
+					size="45" /></td>
 			</tr>
 			<tr>
 				<td align="right">Confirm Password:</td>
 				<td align="left"><input type="password" id="confirmPassword" name="confirmPassword"
-					size="45" value="${customer.password}" /></td>
+					size="45" /></td>
 			</tr>
 			<tr>
 				<td align="right">Phone Number:</td>
