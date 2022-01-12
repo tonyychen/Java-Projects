@@ -4,14 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Evergreen Bookstore Administration</title>
-<link rel="stylesheet" href="../css/style.css" />
+<title>Evergreen Books - Online Bookstore</title>
+<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
 
 	<div align="center">
+		<br/>
 		<h2>${message}</h2>
+		<br/>
 	</div>
 
 	<jsp:directive.include file="footer.jsp" />
