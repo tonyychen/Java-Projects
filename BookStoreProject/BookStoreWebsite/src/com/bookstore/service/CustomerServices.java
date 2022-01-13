@@ -143,9 +143,15 @@ public class CustomerServices {
 		String zipCode = request.getParameter("zipCode");
 		String country = request.getParameter("country");
 
-		customer.setEmail(email);
+		if (email != null && !email.equals("")) {
+			customer.setEmail(email);
+		}
 		customer.setFullname(fullName);
-		customer.setPassword(HashGenerator.generateMD5(password));
+		
+		if (password != null && !password.equals("")) {
+			customer.setPassword(HashGenerator.generateMD5(password));
+		}
+		
 		customer.setPhone(phone);
 		customer.setAddress(address);
 		customer.setCity(city);
@@ -160,9 +166,9 @@ public class CustomerServices {
 	public void doLogin() throws ServletException, IOException, HashGenerationException {
 		String email = request.getParameter("email");
 		String password = HashGenerator.generateMD5(request.getParameter("password"));
-		
+
 		Customer customer = customerDAO.checkLogin(email, password);
-		
+
 		if (customer == null) {
 			String message = "Login failed. Please check your email and password";
 			CommonUtility.forwardToPage(request, response, "frontend/login.jsp", message);
@@ -171,8 +177,20 @@ public class CustomerServices {
 			showCustomerProfile();
 		}
 	}
-	
+
 	public void showCustomerProfile() throws ServletException, IOException {
 		CommonUtility.forwardToPage(request, response, "frontend/customer_profile.jsp");
+	}
+
+	public void showCustomerProfileEditForm() throws ServletException, IOException {
+		CommonUtility.forwardToPage(request, response, "frontend/edit_profile.jsp");
+	}
+
+	public void updateCustomerProfile() throws HashGenerationException, ServletException, IOException {
+		Customer customer = (Customer) request.getSession().getAttribute("loggedCustomer");
+		updateCustomerFieldsFromForm(customer);
+		customerDAO.update(customer);
+		
+		showCustomerProfile();
 	}
 }

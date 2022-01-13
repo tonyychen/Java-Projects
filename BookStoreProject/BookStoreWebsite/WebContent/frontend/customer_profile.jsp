@@ -11,9 +11,47 @@
 	<jsp:directive.include file="header.jsp" />
 
 	<div align="center">
-		<br/>
-		<h2>Customer Profile Page</h2>
-		<br/>
+		<br />
+		<h2>Welcome, ${loggedCustomer.fullname}</h2>
+		<br />
+
+
+		<table style="border: 0">
+			<tr>
+				<td><b>E-mail Address:</b></td>
+				<td>${loggedCustomer.email}</td>
+			</tr>
+			<tr>
+				<td><b>Full Name:</b></td>
+				<td>${loggedCustomer.fullname}</td>
+			</tr>
+			<tr>
+				<td><b>Phone Number:</b></td>
+				<td>${loggedCustomer.phone}</td>
+			</tr>
+			<tr>
+				<td><b>Address:</b></td>
+				<td>${loggedCustomer.address}</td>
+			</tr>
+			<tr>
+				<td><b>City:</b></td>
+				<td>${loggedCustomer.city}</td>
+			</tr>
+			<tr>
+				<td><b>Zip Code:</b></td>
+				<td>${loggedCustomer.zipcode}</td>
+			</tr>
+			<tr>
+				<td><b>Country:</b></td>
+				<td>${loggedCustomer.country}</td>
+			</tr>
+		</table>
+
+		<br />
+		<h3>
+			<a href="edit_profile">Edit My Profile</a>
+		</h3>
+		<br />
 	</div>
 
 	<jsp:directive.include file="footer.jsp" />
