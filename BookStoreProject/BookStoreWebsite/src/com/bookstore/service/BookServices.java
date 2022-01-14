@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import com.bookstore.dao.BookDAO;
 import com.bookstore.dao.CategoryDAO;
 import com.bookstore.entity.Book;
 import com.bookstore.entity.Category;
+import com.bookstore.entity.Review;
 
 public class BookServices {
 	private BookDAO bookDAO;
@@ -146,7 +148,7 @@ public class BookServices {
 			return;
 		}
 
-		//there is one bookByTitle and it is not this book
+		// there is one bookByTitle and it is not this book
 		if (bookByTitle != null && !existBook.equals(bookByTitle)) {
 			String message = "Could not update book because there is another book having the same title.";
 			CommonUtility.showMessageBackend(request, response, message);
@@ -168,6 +170,13 @@ public class BookServices {
 
 		if (existBook == null) {
 			String message = "Could not find book with ID " + bookId + ", or it might have been deleted";
+			CommonUtility.showMessageBackend(request, response, message);
+			return;
+		}
+
+		if (bookDAO.hasReviews(bookId)) {
+			String message = "Cannot delete book with ID " + bookId
+					+ " because the book is associated with one or more reviews";
 			CommonUtility.showMessageBackend(request, response, message);
 			return;
 		}

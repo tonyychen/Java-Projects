@@ -26,7 +26,7 @@
 		</div>
 
 		<div>
-			<a href="reviews"><img src="../images/review.png" /><br />Reviews</a>
+			<a href="list_review"><img src="../images/review.png" /><br />Reviews</a>
 		</div>
 
 		<div>
