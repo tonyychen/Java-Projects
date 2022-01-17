@@ -47,7 +47,7 @@
 					<td>${customer.fullname}</td>
 					<td>${customer.city}</td>
 					<td>${customer.country}</td>
-					<td><fmt:formatDate pattern='MM/dd/yyyy' value='${customer.registerDate}'/></td>
+					<td><fmt:formatDate type='both' value='${customer.registerDate}'/></td>
 					<td><a href="edit_customer?id=${customer.customerId}">Edit</a> &nbsp; 
 					<a href="javascript:void(0);" class="deleteLink" id="${customer.customerId}">Delete</a>
 					</td>

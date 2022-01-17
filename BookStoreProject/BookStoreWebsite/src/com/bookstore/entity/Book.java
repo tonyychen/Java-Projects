@@ -5,6 +5,8 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -181,9 +183,11 @@ public class Book implements java.io.Serializable {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
 	public Set<Review> getReviews() {
-		return this.reviews;
+		TreeSet<Review> sortedReviews = new TreeSet<>((review1, review2) -> review2.getReviewTime().compareTo(review1.getReviewTime()));
+		sortedReviews.addAll(reviews);
+		return sortedReviews;
 	}
 
 	public void setReviews(Set<Review> reviews) {
@@ -208,6 +212,53 @@ public class Book implements java.io.Serializable {
 	@Transient
 	public void setBase64Image(String base64Image) {
 		this.base64Image = base64Image;
+	}
+	
+	@Transient
+	public float getAverageRating() {
+		float averageRating = 0.0f;
+		float sum = 0.0f;
+		
+		if (reviews.isEmpty()) {
+			return 0.0f;
+		}
+		
+		for (Review review : reviews) {
+			sum += review.getRating();
+		}
+		
+		averageRating = sum / reviews.size();
+		
+		
+		return averageRating;
+	}
+		
+	@Transient
+	public String getRatingString(float averageRating) {
+		String[] arr = new String[5];
+		
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = "off";
+		}
+		
+		int numberOfStarsOn = (int) averageRating;
+		
+		for (int i = 0; i < numberOfStarsOn; i++) {
+			arr[i] = "on";
+		}
+		
+		if (averageRating > numberOfStarsOn) {
+			arr[numberOfStarsOn] = "half";
+		}
+		
+		return String.join(",", arr);
+	}
+	
+	@Transient
+	public String getRatingStars() {
+		float averageRating = getAverageRating();
+		
+		return getRatingString(averageRating);
 	}
 
 	@Override

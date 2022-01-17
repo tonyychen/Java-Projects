@@ -44,7 +44,7 @@
 					<td>${review.rating}</td>
 					<td>${review.headline}</td>
 					<td>${review.customer.fullname}</td>
-					<td><fmt:formatDate pattern='MM/dd/yyyy' value='${review.reviewTime}'/></td>
+					<td><fmt:formatDate type='both' value='${review.reviewTime}'/></td>
 					<td><a href="edit_review?id=${review.reviewId}">Edit</a> &nbsp; <a
 						href="javascript:void(0);" class="deleteLink" id="${review.reviewId}">Delete</a></td>
 				</tr>

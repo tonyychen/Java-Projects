@@ -35,12 +35,12 @@
 									<a href="view_book?id=${book.bookId}">${book.title}</a>
 								</h2>
 							</div>
-							<div>Rating ******</div>
+							<div><jsp:directive.include file="book_rating.jsp" /></div>
 							<div>
 								<i>by ${book.author}</i>
 							</div>
 							<div>
-								<p>${fn:substring (book.description, 0, 100)}...</p>
+								<p>${fn:substring (book.description, 0, 1000)}...</p>
 							</div>
 						</div>
 						<div id="search-price">

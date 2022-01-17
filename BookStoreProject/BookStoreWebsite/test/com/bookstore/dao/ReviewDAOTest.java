@@ -31,15 +31,15 @@ public class ReviewDAOTest {
 		Review review = new Review();
 		Book book = new Book();
 		Customer customer = new Customer();
-		book.setBookId(3);
-		customer.setCustomerId(8);
+		book.setBookId(2);
+		customer.setCustomerId(5);
 
 		review.setBook(book);
 		review.setCustomer(customer);
 
-		review.setHeadline("This is a very good book!");
-		review.setRating(4);
-		review.setComment("I have just read this book. Very good.");
+		review.setHeadline("Excellent book!");
+		review.setRating(5);
+		review.setComment("A comprehensive book!");
 
 		Review savedReview = reviewDao.create(review);
 
