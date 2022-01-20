@@ -9,6 +9,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>${book.title}</title>
 <link rel="stylesheet" href="css/style.css" />
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
@@ -42,42 +44,57 @@
 						<a id="reviews">Customer Reviews</a>
 					</h2></td>
 				<td colspan="2">
-					<button>Write a Customer Review</button>
+					<button id="buttonWriteReview">Write a Customer Review</button>
 				</td>
 			</tr>
-
-			<tr>
-				<td colspan="3">
-					<table style="border: 0">
-						<c:forEach items="${book.reviews}" var="review">
-							<tr>
-								<td><c:forTokens items="${review.stars}" delims=","
-										var="star">
-										<c:if test="${star eq 'on'}">
-											<img src="images/rating_on.png" />
-										</c:if>
-										<c:if test="${star eq 'off'}">
-											<img src="images/rating_off.png" />
-										</c:if>
-									</c:forTokens> - <b>${review.headline}</b></td>
-								<td rowspan="2" style="width: 259px; vertical-align: top;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>${review.comment}</i></td>
-							</tr>
-							<tr>
-								<td>by ${review.customer.fullname} on <fmt:formatDate
-										type='both' value='${review.reviewTime}' />
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-							</tr>
-						</c:forEach>
-					</table>
-				</td>
-			</tr>
+		</table>
+		
+		<table width="80%" style="border: 0">
+			<c:forEach items="${book.reviews}" var="review">
+				<tr>
+					<td><c:forTokens items="${review.stars}" delims=","
+							var="star">
+							<c:if test="${star eq 'on'}">
+								<img src="images/rating_on.png" />
+							</c:if>
+							<c:if test="${star eq 'off'}">
+								<img src="images/rating_off.png" />
+							</c:if>
+						</c:forTokens> - <b>${review.headline}</b></td>
+				</tr>
+				<tr>
+					<td>by <i>${review.customer.fullname}</i> on <fmt:formatDate
+							type='both' value='${review.reviewTime}' />
+					</td>
+				</tr>
+				<tr>
+					<td><i>${review.comment}</i></td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+			</c:forEach>
 		</table>
 
 	</div>
 
 	<jsp:directive.include file="footer.jsp" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#buttonWriteReview").click(function() {
+				window.location = 'write_review?book_id=' + ${book.bookId};
+			});
+		})
+		
+		window.addEventListener( "pageshow", function ( event ) {
+		  var historyTraversal = event.persisted || 
+		                         ( typeof window.performance != "undefined" && 
+		                              window.performance.navigation.type === 2 );
+		  if ( historyTraversal ) {
+		    // Handle page restore.
+		    window.location.reload();
+		  }
+		});
+	</script>
 </body>
 </html>
