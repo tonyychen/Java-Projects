@@ -117,6 +117,11 @@ img.book-small {
 	height: 164px;
 }
 
+img.book-mini {
+	width: 64px;
+	height: 82px;
+}
+
 img.book-large {
 	width: 240px;
 	height: 300px;

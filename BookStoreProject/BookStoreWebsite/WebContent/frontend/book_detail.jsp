@@ -31,8 +31,8 @@
 						<u><a href="#reviews">${fn:length(book.reviews)} Reviews</a></u>
 				</td>
 				<td valign="top" rowspan="2" width="20%">
-					<h2>$${book.price}</h2> <br /> <br />
-					<button type="submit">Add to Cart</button>
+					<h2><fmt:formatNumber value="${book.price}" type="currency" /></h2> <br /> <br />
+					<button id="buttonAddToCart">Add to Cart</button>
 				</td>
 			</tr>
 			<tr>
@@ -84,7 +84,11 @@
 			$("#buttonWriteReview").click(function() {
 				window.location = 'write_review?book_id=' + ${book.bookId};
 			});
-		})
+			
+			$("#buttonAddToCart").click(function() {
+				window.location = 'add_to_cart?book_id=' + ${book.bookId};
+			});
+		});
 		
 		window.addEventListener( "pageshow", function ( event ) {
 		  var historyTraversal = event.persisted || 
