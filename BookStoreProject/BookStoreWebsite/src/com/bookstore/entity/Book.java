@@ -38,7 +38,7 @@ import javax.persistence.UniqueConstraint;
 	@NamedQuery(name = "Book.search", query = "SELECT b FROM Book b WHERE b.title LIKE '%' || :keyword || '%'" + 
 				" OR b.author LIKE '%' || :keyword || '%' OR b.description LIKE '%' || :keyword || '%'"),
 	@NamedQuery(name = "Book.withReviews", query = "SELECT b FROM Book b JOIN b.reviews r WHERE b.bookId = :bookId"),
-
+	@NamedQuery(name = "Book.withOrders", query = "SELECT b FROM Book b JOIN b.orderDetails r WHERE b.bookId = :bookId"),
 })
 public class Book implements java.io.Serializable {
 

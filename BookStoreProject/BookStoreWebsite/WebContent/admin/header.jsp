@@ -30,7 +30,7 @@
 		</div>
 
 		<div>
-			<a href="orders"><img src="../images/order.png" /><br />Orders</a>
+			<a href="list_order"><img src="../images/order.png" /><br />Orders</a>
 		</div>
 
 	</div>

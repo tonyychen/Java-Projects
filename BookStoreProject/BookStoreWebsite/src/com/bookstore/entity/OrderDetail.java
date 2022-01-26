@@ -3,6 +3,7 @@ package com.bookstore.entity;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -18,13 +19,17 @@ import javax.persistence.Table;
 @Table(name = "order_detail", catalog = "bookstoredb")
 public class OrderDetail implements java.io.Serializable {
 
-	private OrderDetailId id;
+	private OrderDetailId id = new OrderDetailId();
 	private Book book;
 	private BookOrder bookOrder;
 	private int quantity;
 	private float subtotal;
 
 	public OrderDetail() {
+	}
+	
+	public OrderDetail(OrderDetailId id) {
+		this.id = id;
 	}
 
 	public OrderDetail(OrderDetailId id, Book book, BookOrder bookOrder, int quantity, float subtotal) {
@@ -45,9 +50,11 @@ public class OrderDetail implements java.io.Serializable {
 
 	public void setId(OrderDetailId id) {
 		this.id = id;
+		this.setBook(id.getBook());
+		this.setBookOrder(id.getBookOrder());
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "book_id", nullable = false, insertable = false, updatable = false)
 	public Book getBook() {
 		return this.book;
@@ -55,9 +62,10 @@ public class OrderDetail implements java.io.Serializable {
 
 	public void setBook(Book book) {
 		this.book = book;
+		this.id.setBook(book);
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_id", nullable = false, insertable = false, updatable = false)
 	public BookOrder getBookOrder() {
 		return this.bookOrder;
@@ -65,6 +73,7 @@ public class OrderDetail implements java.io.Serializable {
 
 	public void setBookOrder(BookOrder bookOrder) {
 		this.bookOrder = bookOrder;
+		this.id.setBookOrder(bookOrder);
 	}
 
 	@Column(name = "quantity", nullable = false)

@@ -68,5 +68,12 @@ public class BookDAO extends JpaDAO<Book> implements GenericDAO<Book> {
 		}
 		return false;
 	}
-
+	
+	public boolean hasOrders(Object bookId) {
+		List<Book> books = super.findWithNamedQuery("Book.withOrders", "bookId", bookId);
+		if (books != null && !books.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
 }

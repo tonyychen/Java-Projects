@@ -113,6 +113,13 @@ public class CustomerServices {
 			CommonUtility.showMessageBackend(request, response, message);
 			return;
 		}
+		
+		if (customerDAO.hasOrders(customerId)) {
+			String message = "Could not delete customer with ID " + customerId
+					+ " because it has one or more orders";
+			CommonUtility.showMessageBackend(request, response, message);
+			return;
+		}
 
 		customerDAO.delete(customerId);
 

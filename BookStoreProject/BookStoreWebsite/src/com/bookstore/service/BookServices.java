@@ -180,6 +180,13 @@ public class BookServices {
 			CommonUtility.showMessageBackend(request, response, message);
 			return;
 		}
+		
+		if (bookDAO.hasOrders(bookId)) {
+			String message = "Cannot delete book with ID " + bookId
+					+ " because the book is associated with one or more orders";
+			CommonUtility.showMessageBackend(request, response, message);
+			return;
+		}
 
 		bookDAO.delete(bookId);
 

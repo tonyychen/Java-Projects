@@ -67,4 +67,12 @@ public class CustomerDAO extends JpaDAO<Customer> implements GenericDAO<Customer
 		return false;
 	}
 
+	public boolean hasOrders(Object customerId) {
+		List<Customer> customers = super.findWithNamedQuery("Customer.withOrders", "customerId", customerId);
+		if (customers != null && !customers.isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+
 }
