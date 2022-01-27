@@ -112,5 +112,9 @@
 	function goToHomePage() {
 		window.location.href = "${pageContext.request.contextPath}";
 	}
+	
+	function checkOut() {
+		window.location.href = "checkout";
+	}
 </script>
 </html>

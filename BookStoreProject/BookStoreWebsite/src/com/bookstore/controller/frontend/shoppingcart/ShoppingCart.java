@@ -35,15 +35,15 @@ public class ShoppingCart {
 		return total;
 	}
 	
-	public double getTotalAmount() {
-		double total = 0;
+	public float getTotalAmount() {
+		float total = 0f;
 		
 		Iterator<Book> iterator = cart.keySet().iterator();
 		
 		while (iterator.hasNext()) {
 			Book book = iterator.next();
 			Integer quantity = cart.get(book);
-			double subTotal = quantity * book.getPrice();
+			float subTotal = quantity * book.getPrice();
 			total += subTotal;
 		}
 		

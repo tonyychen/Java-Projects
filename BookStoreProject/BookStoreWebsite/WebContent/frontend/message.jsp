@@ -13,6 +13,7 @@
 	<div align="center">
 		<br/>
 		<h2>${message}</h2>
+		<a href="${pageContext.request.contextPath}">Return to Home Page</a>
 		<br/>
 	</div>
 
