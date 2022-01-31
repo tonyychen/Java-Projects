@@ -176,6 +176,26 @@ public class OrderDAOTest {
 		
 		assertEquals(2, order.getOrderDetails().size());
 	}
+	
+	@Test
+	public void testGetByIdAndCustomerNull() {
+		Integer orderId = 10;
+		Integer customerId = 99;
+		
+		BookOrder order = orderDAO.get(orderId, customerId);
+		
+		assertNull(order);
+	}
+	
+	@Test
+	public void testGetByIdAndCustomerNotNull() {
+		Integer orderId = 10;
+		Integer customerId = 4;
+		
+		BookOrder order = orderDAO.get(orderId, customerId);
+		
+		assertNotNull(order);
+	}
 
 	@Test
 	public void testDeleteOrder() {
@@ -210,6 +230,22 @@ public class OrderDAOTest {
 		long totalOrders = orderDAO.count();
 		
 		assertEquals(2, totalOrders);
+	}
+	
+	@Test
+	public void testListByCustomerNoOrders() {
+		Integer customerId = 99;
+		List<BookOrder> listOrders = orderDAO.listByCustomer(customerId);
+		
+		assertTrue(listOrders.isEmpty());
+	}
+	
+	@Test
+	public void testListByCustomerHaveOrders() {
+		Integer customerId = 3;
+		List<BookOrder> listOrders = orderDAO.listByCustomer(customerId);
+		
+		assertTrue(!listOrders.isEmpty());
 	}
 
 }
