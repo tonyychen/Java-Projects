@@ -1,7 +1,9 @@
 package com.bookstore.controller.frontend.shoppingcart;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,10 +19,10 @@ public class UpdateCartServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String[] arrayBookIds = request.getParameterValues("bookId");
 		String[] arrayQuantities = new String[arrayBookIds.length];
-
-		for (int i = 1; i <= arrayQuantities.length; i++) {
-			String quantity = request.getParameter("quantity" + i);
-			arrayQuantities[i - 1] = quantity;
+		
+		for (int i = 0; i < arrayBookIds.length; i++) {
+			String quantity = request.getParameter("quantityFor" + arrayBookIds[i]);
+			arrayQuantities[i] = quantity;
 		}
 
 		int[] bookIds = Arrays.stream(arrayBookIds).mapToInt(Integer::parseInt).toArray();

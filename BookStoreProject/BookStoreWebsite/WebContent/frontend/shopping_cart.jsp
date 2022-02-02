@@ -49,7 +49,7 @@
 								<td>${item.key.title}</td>
 								<td><input type="hidden" name="bookId"
 									value="${item.key.bookId}" /> <input type="text"
-									name="quantity${status.index + 1}" value="${item.value}"
+									name="quantityFor${item.key.bookId}" value="${item.value}"
 									size="5" /> <br />
 									<div>
 										<button type="submit" style="padding: 2px">Update</button>
@@ -63,7 +63,8 @@
 						</c:forEach>
 
 						<tr>
-							<td colspan="3" align="center"><a href="clear_cart"><b>Clear Cart</b></a></td>
+							<td colspan="3" align="center"><a href="clear_cart"><b>Clear
+										Cart</b></a></td>
 							<td><b>${cart.totalQuantity} book(s)</b></td>
 							<td><b>Total:</b></td>
 							<td colspan="2"><b><fmt:formatNumber
@@ -91,7 +92,7 @@
 		$("#cartForm").validate({
 			rules : {
 				<c:forEach items="${cart.items}" var="item" varStatus="status">
-					quantity${status.index + 1}: {
+					quantityFor${item.key.bookId}: {
 						required: true, 
 						number: true,
 						min: 1},
@@ -100,7 +101,7 @@
 	
 			messages : {
 				<c:forEach items="${cart.items}" var="item" varStatus="status">
-					quantity${status.index + 1}: {
+					quantityFor${item.key.bookId}: {
 						required: "Please enter quantity",
 						number: "Quantity must be a number",
 						min: "Quantity must be greater than 0"},

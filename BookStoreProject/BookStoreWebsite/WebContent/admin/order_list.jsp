@@ -48,9 +48,9 @@
 					<td><fmt:formatDate type='both' value='${order.orderDate}' /></td>
 					<td>
 						<a href="view_order?id=${order.orderId}">Details</a> &nbsp; 
-						<a href="edit_review?id=${review.reviewId}">Edit</a> &nbsp; 
+						<a href="edit_order?id=${order.orderId}">Edit</a> &nbsp; 
 						<a href="javascript:void(0);" class="deleteLink"
-							id="${review.reviewId}">Delete</a>
+							id="${order.orderId}">Delete</a>
 					</td>
 				</tr>
 			</c:forEach>

@@ -30,12 +30,16 @@ public class OrderServices {
 		this.orderDAO = new OrderDAO();
 	}
 
-	public void listAllOrder() throws ServletException, IOException {
+	public void listAllOrder(String message) throws ServletException, IOException {
 		List<BookOrder> listOrder = orderDAO.listAll();
 
 		request.setAttribute("listOrder", listOrder);
 
-		CommonUtility.forwardToPage(request, response, "order_list.jsp");
+		CommonUtility.forwardToPage(request, response, "order_list.jsp", message);
+	}
+	
+	public void listAllOrder() throws ServletException, IOException {
+		listAllOrder(null);
 	}
 
 	public void viewOrderDetailForAdmin() throws ServletException, IOException {
@@ -138,5 +142,81 @@ public class OrderServices {
 		request.setAttribute("order", order);
 
 		CommonUtility.forwardToPage(request, response, "frontend/order_detail.jsp");
+	}
+
+	public void showEditOrderForm() throws ServletException, IOException {
+		Integer orderId = Integer.parseInt(request.getParameter("id"));
+		BookOrder order = orderDAO.get(orderId);
+		
+		if (order == null) {
+			String message = "Cannot find order for Order Id: " + orderId;
+			CommonUtility.showMessageFrontend(request, response, message);
+			return;
+		}
+		
+		request.getSession().setAttribute("order", order);
+		
+		CommonUtility.forwardToPage(request, response, "order_form.jsp");
+						
+	}
+
+	public void updateOrder() throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		BookOrder order = (BookOrder) session.getAttribute("order");
+		
+		String recipientName = request.getParameter("recipientName");
+		String recipientPhone = request.getParameter("recipientPhone");
+		String shippingAddress = request.getParameter("shippingAddress");
+		String paymentMethod = request.getParameter("paymentMethod");
+		String orderStatus = request.getParameter("orderStatus");
+		
+		order.setRecipientName(recipientName);
+		order.setRecipientPhone(recipientPhone);
+		order.setShippingAddress(shippingAddress);
+		order.setPaymentMethod(paymentMethod);
+		order.setStatus(orderStatus);
+		
+		Set<OrderDetail> orderDetails = order.getOrderDetails();
+		Iterator<OrderDetail> iterator = orderDetails.iterator();
+		
+		float total = 0f;
+		while (iterator.hasNext()) {
+			OrderDetail orderDetail = iterator.next();
+			Integer bookId = orderDetail.getBook().getBookId();
+			Integer newQuantity = Integer.parseInt(request.getParameter("quantityFor" + bookId));
+			if (newQuantity == 0) {
+				iterator.remove();
+				continue;
+			}
+			orderDetail.setQuantity(newQuantity);
+			float subtotal = newQuantity * orderDetail.getBook().getPrice();
+			orderDetail.setSubtotal(subtotal);
+			
+			total += subtotal;
+		}
+		
+		order.setTotal(total);
+		
+		orderDAO.update(order);
+		
+		String orderDetailPage = request.getContextPath().concat("/admin/view_order?id=" + order.getOrderId());
+		response.sendRedirect(orderDetailPage);
+	}
+
+	public void deleteOrder() throws ServletException, IOException {
+		Integer orderId = Integer.parseInt(request.getParameter("id"));
+		BookOrder order = orderDAO.get(orderId);
+		
+		if (order == null) {
+			String message = "Cannot find order for Order Id: " + orderId;
+			CommonUtility.showMessageBackend(request, response, message);
+			return;
+		}
+		
+		orderDAO.delete(orderId);
+		
+		String message = "The order ID " + orderId + " has been deleted.";
+		
+		listAllOrder(message);
 	}
 }

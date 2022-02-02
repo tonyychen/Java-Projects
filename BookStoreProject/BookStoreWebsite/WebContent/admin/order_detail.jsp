@@ -103,9 +103,9 @@
 	<br />
 	<br />
 	<div align="center">
-		<button onclick="xxx(); return false;">Edit this Order</button>
+		<button onclick="GoToListOrderPage(); return false;">Cancel</button>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<button onclick="xxx(); return false;">Delete this Order</button>
+		<button onclick="GoEditOrder(); return false;">Edit this Order</button>
 	</div>
 
 	<jsp:directive.include file="footer.jsp" />
@@ -134,6 +134,14 @@
 																})
 											})
 						});
+		
+		function GoToListOrderPage() {
+			window.location.href = "list_order";
+		}
+		
+		function GoEditOrder() {
+			window.location.href = "edit_order?id=${order.orderId}";
+		}
 	</script>
 </body>
 </html>
