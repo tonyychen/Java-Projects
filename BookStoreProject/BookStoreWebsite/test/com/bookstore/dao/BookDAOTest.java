@@ -225,6 +225,28 @@ public class BookDAOTest {
 
 		return newBook;
 	}
+	
+	@Test
+	public void testListBestSellingBooks() {
+		List<Book> topBestSellingBooks = bookDao.listBestSellingBooks();
+		
+		for (Book book : topBestSellingBooks) {
+			System.out.println(book.getBookId());
+		}
+		
+		assertEquals(4, topBestSellingBooks.size());
+	}
+	
+	@Test
+	public void testListMostFavoredBooks() {
+		List<Book> mostFavoredBooks = bookDao.listMostFavoredBooks();
+		
+		for (Book book : mostFavoredBooks) {
+			System.out.println(book.getBookId());
+		}
+		
+		assertEquals(4, mostFavoredBooks.size());
+	}
 
 
 }

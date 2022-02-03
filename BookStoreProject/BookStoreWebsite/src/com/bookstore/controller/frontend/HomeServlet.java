@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bookstore.dao.BookDAO;
 import com.bookstore.entity.Book;
+import com.bookstore.service.CommonUtility;
 
 @WebServlet("")
 public class HomeServlet extends HttpServlet {
@@ -27,12 +28,14 @@ public class HomeServlet extends HttpServlet {
 		
 
 		List<Book> listNewBooks = bookDAO.listNewBooks();
+		List<Book> listBestSellingBooks = bookDAO.listBestSellingBooks();
+		List<Book> listMostFavoredBooks = bookDAO.listMostFavoredBooks();
 
 		request.setAttribute("listNewBooks", listNewBooks);
+		request.setAttribute("listBestSellingBooks", listBestSellingBooks);
+		request.setAttribute("listMostFavoredBooks", listMostFavoredBooks);
 
-		String homepage = "frontend/index.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(homepage);
-		dispatcher.forward(request, response);
+		CommonUtility.forwardToPage(request, response, "frontend/index.jsp");
 	}
 
 }
