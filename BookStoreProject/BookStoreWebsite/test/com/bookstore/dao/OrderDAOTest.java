@@ -247,5 +247,12 @@ public class OrderDAOTest {
 		
 		assertTrue(!listOrders.isEmpty());
 	}
+	
+	@Test
+	public void testListMostRecentSales() {
+		List<BookOrder> recentOrders = orderDAO.listMostRecentSales();
+		
+		assertEquals(3, recentOrders.size());
+	}
 
 }

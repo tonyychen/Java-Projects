@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Customer Profile - Online Bookstore</title>
+<title>Customer Profile - Evergreen Bookstore</title>
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
