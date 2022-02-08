@@ -6,11 +6,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admin Login</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css" />
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 </head>
-<body>
+<body class="no-margin">
+	<div class="banner">
+		<div class="banner__content">
+			<div class="banner__text">
+				<strong>Reminder: this is a TEST site.</strong> Feel free to play
+				around with it. <br /> Sample Admin Login - <Strong>
+					Email: admin@gmail.com &nbsp;&nbsp;&nbsp; Password: password</Strong>
+			</div>
+			<button class="banner__close" type="button">
+				<span class="material-icons"> close </span>
+			</button>
+		</div>
+	</div>
+
 	<div align="center">
 		<h1>Bookstore Administration</h1>
 		<h2>Admin Login</h2>
@@ -44,22 +59,27 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#loginForm").validate({
-			rules: {
-				email: {
-					required: true,
-					email: true
+			rules : {
+				email : {
+					required : true,
+					email : true
 				},
-				password: "required"
+				password : "required"
 			},
-			
-			messages: {
-				email: {
-					required: "Please enter email",
-					email: "Please enter an valid email address"
+
+			messages : {
+				email : {
+					required : "Please enter email",
+					email : "Please enter an valid email address"
 				},
-				password: "Please enter password"
+				password : "Please enter password"
 			}
 		});
 	});
+
+	document.querySelector(".banner__close").addEventListener("click",
+			function() {
+				this.closest(".banner").style.display = "none";
+			})
 </script>
 </html>

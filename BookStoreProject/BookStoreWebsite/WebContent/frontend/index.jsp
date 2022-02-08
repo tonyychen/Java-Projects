@@ -6,9 +6,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Evergreen Books - Online Bookstore</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="no-margin">
+	<div class="banner">
+		<div class="banner__content">
+			<div class="banner__text">
+				<strong>Reminder: this is a TEST site.</strong> But feel free to
+				play around with it.
+			</div>
+			<button class="banner__close" type="button">
+				<span class="material-icons"> close </span>
+			</button>
+		</div>
+	</div>
+
 	<jsp:directive.include file="header.jsp" />
 
 	<div class="center">
@@ -35,4 +49,10 @@
 
 	<jsp:directive.include file="footer.jsp" />
 </body>
+<script>
+	document.querySelector(".banner__close").addEventListener("click",
+			function() {
+				this.closest(".banner").style.display = "none";
+			})
+</script>
 </html>

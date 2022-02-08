@@ -11,12 +11,14 @@
 				value="Search" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 			<c:if test="${loggedCustomer == null}">
+				<a href="admin/">Admin Login</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<a href="login">Sign In</a> | 
 				<a href="register">Register</a> | 
 			</c:if>
 			
 			<c:if test="${loggedCustomer != null}">
-				<a href="view_profile">Welcome, ${loggedCustomer.fullname}</a> | 
+				<a href="view_profile">Welcome, <i>${loggedCustomer.fullname}</i></a> | 
 				<a href="view_orders">My Orders</a> | 
 				<a href="logout">Logout</a> | 
 			</c:if>
