@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bookstore.dao.BookDAO;
 import com.bookstore.entity.Book;
 
 @WebServlet("/remove_from_cart")

@@ -51,7 +51,8 @@
 			<tr>
 				<td align="right">Password:</td>
 				<td align="left"><input type="password" id="password"
-					name="password" size="20" /></td>
+					name="password" size="20"
+					<c:if test="${user != null}"> placeholder="(Leave blank if no change)" </c:if> /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -71,30 +72,34 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#userForm").validate({
-			rules: {
-				email: {
-					required: true,
-					email: true
+			rules : {
+				email : {
+					required : true,
+					email : true
 				},
-				fullname: "required",
-				password: "required"
+				fullname : "required",
+				<c:if test="${user == null}">
+				password : "required"
+				</c:if>
 			},
-			
-			messages: {
-				email: {
-					required: "Please enter email",
-					email: "Please enter an valid email address"
+
+			messages : {
+				email : {
+					required : "Please enter email",
+					email : "Please enter an valid email address"
 				},
-				fullname: "Please enter full name",
-				password: "Please enter password"
+				fullname : "Please enter full name",
+				<c:if test="${user == null}">
+				password : "Please enter password"
+				</c:if>
 			}
 		});
-		
+
 		/*
 		$("#buttonCancel").click(function() {
 			history.go(-1);
 		})
-		*/
+		 */
 	});
 </script>
 

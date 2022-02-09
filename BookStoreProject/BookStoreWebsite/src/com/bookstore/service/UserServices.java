@@ -74,7 +74,8 @@ public class UserServices {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
 		String email = request.getParameter("email");
 		String fullName = request.getParameter("fullname");
-		String password = HashGenerator.generateMD5(request.getParameter("password"));
+		String password = request.getParameter("password");
+
 
 		Users userById = userDAO.get(userId);
 		Users userByEmail = userDAO.findByEmail(email);
@@ -86,7 +87,14 @@ public class UserServices {
 			String message = "Could not update user. User with email " + email + " already exists.";
 			CommonUtility.showMessageBackend(request, response, message);
 		} else {
-			Users user = new Users(userId, email, fullName, password);
+			Users user = userDAO.get(userId);
+			user.setEmail(email);
+			user.setFullName(fullName);
+			
+			if (password != null && !password.equals("")) {
+				user.setPassword(HashGenerator.generateMD5(password));
+			}
+
 			userDAO.update(user);
 
 			String message = "User has been updated successfully";

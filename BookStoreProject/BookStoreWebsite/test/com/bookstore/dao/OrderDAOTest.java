@@ -15,7 +15,6 @@ import com.bookstore.entity.Book;
 import com.bookstore.entity.BookOrder;
 import com.bookstore.entity.Customer;
 import com.bookstore.entity.OrderDetail;
-import com.bookstore.entity.OrderDetailId;
 
 public class OrderDAOTest {
 

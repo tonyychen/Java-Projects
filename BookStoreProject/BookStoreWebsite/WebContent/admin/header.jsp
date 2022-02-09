@@ -6,7 +6,7 @@
 		</a>
 	</div>
 	<div>
-		Welcome, <c:out value="${sessionScope.useremail}" /> | <a href="logout">Logout</a> <br /> <br />
+		Welcome, <i><c:out value="${sessionScope.useremail}" /></i> | <a href="logout">Logout</a> <br /> <br />
 	</div>
 	<div id="headermenu">
 		<div>

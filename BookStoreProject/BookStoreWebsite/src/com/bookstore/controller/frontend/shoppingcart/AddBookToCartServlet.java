@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bookstore.dao.BookDAO;
 import com.bookstore.entity.Book;
-import com.bookstore.service.CommonUtility;
 
 @WebServlet("/add_to_cart")
 public class AddBookToCartServlet extends HttpServlet {

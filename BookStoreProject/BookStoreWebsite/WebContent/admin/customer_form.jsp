@@ -47,18 +47,20 @@
 			</tr>
 			<tr>
 				<td align="right">Full Name:</td>
-				<td align="left"><input type="text" id="fullName" name="fullName"
-					size="45" value="${customer.fullname}" /></td>
+				<td align="left"><input type="text" id="fullName"
+					name="fullName" size="45" value="${customer.fullname}" /></td>
 			</tr>
 			<tr>
 				<td align="right">Password:</td>
-				<td align="left"><input type="password" id="password" name="password"
-					size="45" /></td>
+				<td align="left"><input type="password" id="password"
+					name="password" size="45"
+					<c:if test="${customer != null}"> placeholder="(Leave blank if no change)" </c:if> /></td>
 			</tr>
 			<tr>
 				<td align="right">Confirm Password:</td>
-				<td align="left"><input type="password" id="confirmPassword" name="confirmPassword"
-					size="45" /></td>
+				<td align="left"><input type="password" id="confirmPassword"
+					name="confirmPassword" size="45"
+					<c:if test="${customer != null}"> placeholder="(Leave blank if no change)" </c:if> /></td>
 			</tr>
 			<tr>
 				<td align="right">Phone Number:</td>
@@ -104,16 +106,25 @@
 	$(document).ready(function() {
 		$("#customerForm").validate({
 			rules : {
-				email: {
-					required: true,
-					email: true
+				email : {
+					required : true,
+					email : true
 				},
 				fullName : "required",
+				<c:if test="${customer == null}">
 				password : "required",
 				confirmPassword : {
-					required: true,
-					equalTo: "#password"
+					required : true,
+					equalTo : "#password"
 				},
+				</c:if>
+				
+				<c:if test="${customer != null}">
+				confirmPassword : {
+					equalTo : "#password"
+				},
+				</c:if>
+				
 				phone : "required",
 				address : "required",
 				city : "required",
@@ -122,16 +133,25 @@
 			},
 
 			messages : {
-				email: {
-					required: "Please enter e-mail address",
-					email: "Please enter a valid e-mail address"	
+				email : {
+					required : "Please enter e-mail address",
+					email : "Please enter a valid e-mail address"
 				},
 				fullName : "Please enter full name",
+				<c:if test="${customer == null}">
 				password : "Please enter password",
 				confirmPassword : {
-					required: "Please confirm password",
-					equalTo: "Confirm password does not match password"
+					required : "Please confirm password",
+					equalTo : "Confirm password does not match password"
 				},
+				</c:if>
+				
+				<c:if test="${customer != null}">
+				confirmPassword : {
+					equalTo : "Confirm password does not match password"
+				},
+				</c:if>
+				
 				phone : "Please enter phone number",
 				address : "Please enter address",
 				city : "Please enter city",
@@ -144,7 +164,7 @@
 		$("#buttonCancel").click(function() {
 			history.go(-1);
 		})
-		*/
+		 */
 	});
 </script>
 
