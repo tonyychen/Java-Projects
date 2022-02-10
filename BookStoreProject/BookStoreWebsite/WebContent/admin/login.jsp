@@ -16,8 +16,9 @@
 	<div class="banner">
 		<div class="banner__content">
 			<div class="banner__text">
-				<strong>Reminder: this is a TEST site.</strong> Feel free to play
-				around with it. <br /> Sample Admin Login - <Strong>
+				<strong>Reminder: this is a TEST site for Educational
+					Purposes only. DO NOT leave any sensitive info.</strong> But feel free to
+				play around with it. <br /> Sample Admin Login - <Strong>
 					Email: admin@gmail.com &nbsp;&nbsp;&nbsp; Password: password</Strong>
 			</div>
 			<button class="banner__close" type="button">

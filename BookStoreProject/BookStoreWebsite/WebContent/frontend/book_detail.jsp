@@ -23,7 +23,7 @@
 				</td>
 			</tr>
 			<tr height="50px">
-				<td rowspan="2" width="20%"><img class="book-large"
+				<td valign="top" rowspan="2" width="20%"><img class="book-large"
 					src="data:image/jpg;base64,${book.base64Image}" /></td>
 				<td valign="top" align="left"><jsp:directive.include
 						file="book_rating.jsp" /> 

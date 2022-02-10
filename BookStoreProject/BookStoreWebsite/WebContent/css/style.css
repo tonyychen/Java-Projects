@@ -95,6 +95,8 @@ div.book {
 	display: inline-block;
 	margin: 20px;
 	text-align: center;
+	width: 255px;
+	vertical-align: top;
 }
 
 table.book {

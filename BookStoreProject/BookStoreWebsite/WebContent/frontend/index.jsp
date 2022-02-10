@@ -14,7 +14,8 @@
 	<div class="banner">
 		<div class="banner__content">
 			<div class="banner__text">
-				<strong>Reminder: this is a TEST site.</strong> But feel free to
+				<strong>Reminder: this is a TEST site for Educational
+					Purposes only. DO NOT leave any sensitive info.</strong> But feel free to
 				play around with it.
 			</div>
 			<button class="banner__close" type="button">
