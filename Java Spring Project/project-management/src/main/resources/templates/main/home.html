@@ -4,14 +4,59 @@
 
 <head th:replace="layouts :: header"></head>
 
+<nav th:replace="layouts :: navbar"></nav>
+
 <body>
 
-	<nav th:replace="layouts :: navbar"></nav>
+	<div class="container">
 
-	<div th:replace="layouts :: listProjects"></div>
+		<h3>Main DashBoard</h3>
+		<hr>
+		<h4>Current Projects</h4>
 
-	<div th:replace="layouts :: listEmployees"></div>
+		<div class="row">
+			<div class="col-md-6">
+				<table th:replace="layouts :: tableListProjects"></table>
+			</div>
+
+			<div class="col-md-4">
+				<canvas id="myPieChart" height="50" width="50"></canvas>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container">
+		<h4>Current Employees</h4>
+		<div class="row">
+			<div class="col-md-6">
+				<table class="table table-bordered table-striped">
+					<thead class="thead-dark">
+						<tr>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Project Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="aEmployeeProjectCnt : ${employeesListProjectsCnt}">
+							<td th:text="${aEmployeeProjectCnt.firstName}" />
+							<td th:text="${aEmployeeProjectCnt.lastName}" />
+							<td th:text="${aEmployeeProjectCnt.projectCount}" />
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
 
 </body>
+
+<script>
+	var chartData = "[[${projectStatusCnt}]]"
+</script>
+<script type="text/javascript" th:src="@{/js/myChart.js}"></script>
 
 </html>

@@ -8,7 +8,16 @@
 
 	<nav th:replace="layouts :: navbar"></nav>
 
-	<div th:replace="layouts :: listEmployees"></div>
+	<div class="container">
+		<h3>Employee Directory</h3>
+		<hr>
+
+		<!--  Add New Employee Button -->
+		<a th:href="@{/employees/new}" class="btn btn-primary btn-sm mb-3">
+			Add Employee </a>
+
+		<table th:replace="layouts :: tableListEmployees"></table>
+	</div>
 
 </body>
 

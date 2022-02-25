@@ -8,7 +8,16 @@
 
 	<nav th:replace="layouts :: navbar"></nav>
 
-	<div th:replace="layouts :: listProjects"></div>
+	<div class="container">
+		<h3>Projects Directory</h3>
+		<hr>
+
+		<!--  Add New Project Button -->
+		<a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3">New
+			Project</a>
+
+		<table th:replace="layouts :: tableListProjects"></table>
+	</div>
 
 </body>
 
