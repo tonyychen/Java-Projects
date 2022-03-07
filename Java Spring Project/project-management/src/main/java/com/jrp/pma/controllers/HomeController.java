@@ -3,6 +3,7 @@ package com.jrp.pma.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,10 @@ public class HomeController {
 	@Autowired
 	EmployeeRepository empRepo;
 	
+	@Value(value = "${version}")
+	String version;
+	
+	
 	@GetMapping("/")
 	public String displayHome(Model model) throws JsonProcessingException {
 		
@@ -39,6 +44,9 @@ public class HomeController {
 		
 		List<EmployeeProject> employeesProjectCnt = empRepo.employeeProjects();
 		model.addAttribute("employeesListProjectsCnt", employeesProjectCnt);
+		
+		//add version attribute
+		model.addAttribute("version", version);
 		
 		return "main/home";
 	}
