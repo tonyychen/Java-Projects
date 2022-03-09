@@ -34,7 +34,7 @@ public class EmployeeController {
 		empService.save(employee);
 		
 		// use a redirect to prevent duplicate submissions
-		return "redirect:/employees/new";
+		return "redirect:/employees";
 	}
 	
 	@GetMapping
