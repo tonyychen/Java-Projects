@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jrp.pma.dao.EmployeeRepository;
-import com.jrp.pma.dao.ProjectRepository;
 import com.jrp.pma.dto.ChartData;
 import com.jrp.pma.dto.EmployeeProject;
 import com.jrp.pma.entities.Project;
+import com.jrp.pma.services.EmployeeService;
+import com.jrp.pma.services.ProjectService;
 
 @Controller
 public class HomeController {
 	
 	@Autowired
-	ProjectRepository proRepo;
+	ProjectService proService;
 	
 	@Autowired
-	EmployeeRepository empRepo;
+	EmployeeService empService;
 	
 	@Value(value = "${version}")
 	String version;
@@ -32,17 +32,17 @@ public class HomeController {
 	@GetMapping("/")
 	public String displayHome(Model model) throws JsonProcessingException {
 		
-		List<Project> projects = proRepo.findAll();
+		List<Project> projects = proService.getAll();
 		model.addAttribute("projects", projects);
 		
-		List<ChartData> projectData = proRepo.getProjectStatus();
+		List<ChartData> projectData = proService.getProjectStatus();
 		
 		// convert projectData object into a JSON structure for use in JavaScript
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = objectMapper.writeValueAsString(projectData);
 		model.addAttribute("projectStatusCnt", jsonString);
 		
-		List<EmployeeProject> employeesProjectCnt = empRepo.employeeProjects();
+		List<EmployeeProject> employeesProjectCnt = empService.employeeProjects();
 		model.addAttribute("employeesListProjectsCnt", employeesProjectCnt);
 		
 		//add version attribute

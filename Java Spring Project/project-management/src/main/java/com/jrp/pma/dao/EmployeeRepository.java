@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import com.jrp.pma.dto.EmployeeProject;
 import com.jrp.pma.entities.Employee;
 
+@Repository
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 	@Override
 	public List<Employee> findAll();
