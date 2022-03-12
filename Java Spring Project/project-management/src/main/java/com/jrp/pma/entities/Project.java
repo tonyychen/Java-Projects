@@ -1,5 +1,6 @@
 package com.jrp.pma.entities;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,11 +26,19 @@ public class Project {
 	@SequenceGenerator(name = "project_seq", sequenceName = "project_seq", allocationSize = 1, initialValue = 1)
 	private long projectId;
 
+	@NotBlank
 	private String name;
 
+	@NotBlank
 	private String stage; // NOTSTARTED, COMPLETED, INPROGRESS
 
+	@NotBlank
 	private String description;
+
+	
+	private Date startDate;
+	
+	private Date endDate;
 
 	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
 			CascadeType.PERSIST }, fetch = FetchType.LAZY)
@@ -85,6 +95,22 @@ public class Project {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }

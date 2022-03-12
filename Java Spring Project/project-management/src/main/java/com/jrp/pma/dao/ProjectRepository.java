@@ -7,6 +7,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import com.jrp.pma.dto.ChartData;
+import com.jrp.pma.dto.TimeChartData;
 import com.jrp.pma.entities.Project;
 
 @Repository
@@ -18,4 +19,8 @@ public interface ProjectRepository extends PagingAndSortingRepository<Project, L
 			+ "FROM project "
 			+ "GROUP BY stage")
 	public List<ChartData> getProjectStatus();
+	
+	@Query(nativeQuery=true, value="SELECT name as projectName, start_date as startDate, end_date as endDate "
+			+ "FROM project WHERE start_date is not null")
+	public List<TimeChartData> getTimeData();
 }
